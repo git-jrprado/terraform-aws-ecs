@@ -46,6 +46,13 @@ resource "random_string" "alb_cloudfront_key" {
   special = false
 }
 
+resource "aws_ssm_parameter" "ssm_alb_cloudfront_key" {
+  name        = "/${var.name}/alb/cloudfront/key"
+  description = "ALB Cloudfront Key"
+  type        = "SecureString"
+  value       = "${random_string.alb_cloudfront_key.result}"
+}
+
 resource "aws_wafregional_byte_match_set" "alb_header" {
   count = "${var.alb ? 1 : 0}"
 
