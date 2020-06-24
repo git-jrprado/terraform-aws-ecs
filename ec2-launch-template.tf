@@ -11,8 +11,6 @@ data "template_file" "userdata" {
   }
 }
 
-ami = "${var.dynamic_ami == "true" ? data.aws_ami.application.id : var.default_ami}"
-
 # data "template_file" "userdata" {
 #   count = var.environment_windows ? 1 : 0
 #   template = file("${path.module}/userdata_win.tpl")
