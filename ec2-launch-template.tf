@@ -1,23 +1,27 @@
 data "template_file" "userdata" {
-  count = var.environment_linux ? 1 : 0
-  template = file("${path.module}/userdata_linux.tpl")
+  #count = var.environment_linux ? 1 : 0
+  #template = file("${path.module}/userdata_linux.tpl")
+  template = "${var.environment_linux == "true" ? file("${path.module}/userdata_linux.tpl") : file("${path.module}/userdata_win.tpl")}"
 
   vars = {
     tf_cluster_name = aws_ecs_cluster.ecs.name
-    tf_efs_id       = aws_efs_file_system.ecs.id
+    tf_efs_id       = "${var.environment_linux == "true" ? aws_efs_file_system.ecs.id : null"
+    #tf_efs_id       = aws_efs_file_system.ecs.id
     userdata_extra  = var.userdata
   }
 }
 
-data "template_file" "userdata" {
-  count = var.environment_windows ? 1 : 0
-  template = file("${path.module}/userdata_win.tpl")
+ami = "${var.dynamic_ami == "true" ? data.aws_ami.application.id : var.default_ami}"
 
-  vars = {
-    tf_cluster_name = aws_ecs_cluster.ecs.name
-    userdata_extra  = var.userdata
-  }
-}
+# data "template_file" "userdata" {
+#   count = var.environment_windows ? 1 : 0
+#   template = file("${path.module}/userdata_win.tpl")
+
+#   vars = {
+#     tf_cluster_name = aws_ecs_cluster.ecs.name
+#     userdata_extra  = var.userdata
+#   }
+# }
 
 resource "aws_launch_template" "ecs" {
   count = var.environment_linux ? 1 : 0
