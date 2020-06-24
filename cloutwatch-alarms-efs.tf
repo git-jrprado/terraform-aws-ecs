@@ -14,8 +14,9 @@ resource "aws_cloudwatch_metric_alarm" "efs_credits_low" {
   ok_actions                = var.alarm_sns_topics
   insufficient_data_actions = []
   treat_missing_data        = "ignore"
-
-  dimensions = {
-    FileSystemId = aws_efs_file_system.ecs.id
-  }
+  
+  dimensions       = "${var.environment_linux == "true" ? "{ FileSystemId = aws_efs_file_system.ecs.id}"  : "{ FileSystemId = null}"}"
+  # dimensions = {
+  #   FileSystemId = aws_efs_file_system.ecs.id
+  # }
 }
