@@ -30,7 +30,7 @@ module "ecs_apps" {
 <!--- BEGIN_TF_DOCS --->
 
 Error: Invalid multi-line string: Quoted strings may not be split over multiple lines. To produce a multi-line string, either use the 
- escape to represent a newline character or use the "heredoc" multi-line template syntax. (and 64 other messages)
+ escape to represent a newline character or use the "heredoc" multi-line template syntax. (and 62 other messages)
 
 <!--- END_TF_DOCS --->
 
