@@ -1,4 +1,5 @@
 resource "aws_cloudwatch_metric_alarm" "efs_credits_low" {
+  depends_on                = ["aws_efs_file_system.ecs"]
   count = var.environment_linux && length(var.alarm_sns_topics) > 0  && var.alarm_efs_credits_low_threshold != 0 ? 1 : 0
 
   alarm_name                = "${data.aws_iam_account_alias.current.account_alias}-ecs-${var.name}-efs-credits-low"
