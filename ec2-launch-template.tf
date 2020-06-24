@@ -5,7 +5,7 @@ data "template_file" "userdata" {
 
   vars = {
     tf_cluster_name = aws_ecs_cluster.ecs.name
-    tf_efs_id       = "${var.environment_linux == "true" ? aws_efs_file_system.ecs.id : null"
+    tf_efs_id       = "${var.environment_linux == "true" ? aws_efs_file_system.ecs.id : null }"
     #tf_efs_id       = aws_efs_file_system.ecs.id
     userdata_extra  = var.userdata
   }
